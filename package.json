@@ -1,0 +1,22 @@
+{
+  "name": "memory-game",
+  "version": "1.0.0",
+  "description": "a game to test my info in js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mustafa12121/memory-game.git"
+  },
+  "keywords": [
+    "memory"
+  ],
+  "author": "mustafa",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mustafa12121/memory-game/issues"
+  },
+  "homepage": "https://github.com/mustafa12121/memory-game#readme"
+}

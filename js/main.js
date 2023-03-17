@@ -6,8 +6,35 @@ let secondPast = 0,
 let userNameTostor;
 [muinet.innerHTML, second.innerHTML] = [5, 00];
 let intervalOne, intervalTow;
+let boxsContainer = document.querySelector(".cards");
+//creating cards
+let cardsTypes = [
+  "code",
+  "map",
+  "star",
+  "user",
+  "cat",
+  "dog",
+  "phone",
+  "clock",
+  "book",
+  "male",
+];
 
-document.querySelector(".uper-layer span").onclick = (e) => {
+cardsTypes.forEach((cardType, i) => {
+  if (window.innerWidth < 500) {
+    if (i < 12) {
+      creatCard(cardType, boxsContainer);
+      creatCard(cardType, boxsContainer);
+    }
+  } else {
+    creatCard(cardType, boxsContainer);
+    creatCard(cardType, boxsContainer);
+  }
+});
+
+//starting the game
+document.querySelector(".uper-layer span").addEventListener("click", (e) => {
   let userName = prompt("what's your name?");
   if (userName === "" || userName === null) {
     document.querySelector(".game-info .name span").innerHTML = "Mr.Unknown";
@@ -18,6 +45,7 @@ document.querySelector(".uper-layer span").onclick = (e) => {
   userNameTostor = userName;
 
   e.target.parentElement.remove();
+  document.querySelector("#root").requestFullscreen();
   timeconter = setInterval(() => {
     secondPast++;
     if (secondPast == 60) {
@@ -27,11 +55,10 @@ document.querySelector(".uper-layer span").onclick = (e) => {
   }, 1000);
   startTimer();
   showCards();
-};
+});
 
 let duration = 1000;
 let rongTrays = 0;
-let boxsContainer = document.querySelector(".cards");
 let boxs = Array.from(boxsContainer.children);
 let orderRange = [...Array(boxs.length).keys()];
 
@@ -51,6 +78,26 @@ let gamEnd = setInterval(() => {
   }
 }, 500);
 
+function creatCard(type, container) {
+  let card = document.createElement("div");
+  card.className = "box";
+  document.createAttribute("data-icon");
+  card.dataset.icon = type;
+  let frontF = document.createElement("div");
+  frontF.classList.add("face", "front");
+  let icon = document.createElement("i");
+  icon.classList.add("fas", `fa-${type}`);
+  frontF.appendChild(icon);
+  card.appendChild(frontF);
+  let backF = document.createElement("div");
+  backF.classList.add("face", "back");
+  card.appendChild(backF);
+  container.appendChild(card);
+}
+
+function fullScreen() {
+  document.querySelector("#root").requestFullscreen();
+}
 function flipBox(box) {
   box.classList.add("is-fleppid");
 
