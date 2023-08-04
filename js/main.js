@@ -46,13 +46,6 @@ document.querySelector(".uper-layer span").addEventListener("click", (e) => {
 
   e.target.parentElement.remove();
   document.querySelector("#root").requestFullscreen();
-  timeconter = setInterval(() => {
-    secondPast++;
-    if (secondPast == 60) {
-      muinetPast++;
-      secondPast = 0;
-    }
-  }, 1000);
   startTimer();
   showCards();
 });
@@ -124,21 +117,26 @@ function endGame(win) {
     h2.appendChild(document.createTextNode("you win"));
     stopTimer();
     let folts;
-    if (rongTrays < 5) {
-      p.appendChild(document.createTextNode(`you are brilian only `));
-      folts = `<span>${rongTrays}</span> folt`;
-    } else if (rongTrays < 10) {
-      p.appendChild(document.createTextNode(`you are Good you got `));
-      folts = `<span>${rongTrays}</span> folt`;
-    } else if (rongTrays < 15) {
-      p.appendChild(document.createTextNode(`not Bad `));
-      folts = `<span>${rongTrays}</span> folt`;
-    } else if (rongTrays < 20) {
-      p.appendChild(document.createTextNode(`wow you need to work on it `));
-      folts = `<span>${rongTrays}</span> folt`;
-    } else {
-      p.appendChild(document.createTextNode(`dam i have nothing to say `));
-      folts = `<span>${rongTrays}</span> folt`;
+    switch (rongTrays) {
+      case range < 5:
+        p.appendChild(document.createTextNode(`you are brilian only `));
+        folts = `<span>${rongTrays}</span> folt`;
+        break;
+      case rongTrays < 10:
+        p.appendChild(document.createTextNode(`you are Good you got `));
+        folts = `<span>${rongTrays}</span> folt`;
+        break;
+      case rongTrays < 15:
+        p.appendChild(document.createTextNode(`not Bad `));
+        folts = `<span>${rongTrays}</span> folt`;
+        break;
+      case rongTrays < 20:
+        p.appendChild(document.createTextNode(`wow you need to work on it `));
+        folts = `<span>${rongTrays}</span> folt`;
+        break;
+      default:
+        p.appendChild(document.createTextNode(`dam i have nothing to say `));
+        folts = `<span>${rongTrays}</span> folt`;
     }
     p.innerHTML += folts;
     colectAndStor();
@@ -153,8 +151,11 @@ function endGame(win) {
   innerdiv.appendChild(p);
   innerdiv.appendChild(leaderBord());
   innerdiv.appendChild(a);
+  //Befor appeding the div fullScreen mode have to stop| I don't remeber the command  for that -_-
+  //It's fony thoght that I am coding a memory game ^o^
   div.appendChild(innerdiv);
   div.classList.add("game-end");
+  document.querySelector("#root");
   document.body.prepend(div);
   // document.querySelector(".game-end #replay").onclick = () => {
   //   location.reload();
@@ -199,12 +200,22 @@ function swap(array) {
 }
 
 function startTimer() {
+  //conting the the time taken. to store it with the pleayer object
+  timeconter = setInterval(() => {
+    secondPast++;
+    if (secondPast == 60) {
+      muinetPast++;
+      secondPast = 0;
+    }
+  }, 1000);
+
   intervalOne = setInterval(() => {
     if (second.innerHTML == 0) {
       second.innerHTML = 60;
       muinet.innerHTML = `0${--muinet.innerHTML}`;
     }
     second.innerHTML--;
+    //Adding additional zero if the seconds are less than 10
     if (second.innerHTML < 10) {
       second.innerHTML = `0${second.innerHTML}`;
     }
@@ -239,6 +250,7 @@ function leaderBord() {
 
 function colectAndStor() {
   let playerInLeader = [];
+  //chacking if leaderBord is in localStorg
   if (localStorage.getItem("player")) {
     playerInLeader = JSON.parse(localStorage.getItem("player"));
     playerInLeader.push({
@@ -249,7 +261,6 @@ function colectAndStor() {
         muinet: muinetPast,
       },
     });
-    console.log(playerInLeader);
   } else {
     playerInLeader = [
       {
@@ -273,13 +284,11 @@ function colectAndStor() {
       if (a.time.muinet !== b.time.muinet)
         return +b.time.muinet - +a.time.muinet;
       else if (a.time.secontd !== b.time.secontd)
-        return +b.time.secontd - +a.time.secontd;
+        return +a.time.secontd - +b.time.secontd;
     }
   });
 
-  console.log(playerInLeader);
   let jsonOpject = JSON.stringify(playerInLeader);
-  console.log(jsonOpject);
 
   localStorage.setItem("player", jsonOpject);
 }
