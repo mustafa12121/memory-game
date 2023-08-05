@@ -152,6 +152,7 @@ function endGame(win) {
   innerdiv.appendChild(leaderBord());
   innerdiv.appendChild(a);
   //Befor appeding the div fullScreen mode have to stop| I don't remeber the command  for that -_-
+  document.exitFullscreen();
   //It's fony thoght that I am coding a memory game ^o^
   div.appendChild(innerdiv);
   div.classList.add("game-end");
